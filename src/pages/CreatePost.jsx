@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import './CreatePost.css'
+import { supabase } from '../client'
 
 const CreatePost = () => {
+    
 
     const [post, setPost] = useState({title: "", author: "", description: ""})
 
@@ -14,6 +16,16 @@ const CreatePost = () => {
             }
         })
     }
+
+    const createPost = async (event) => {
+        event.preventDefault() //prevent the page to reload when form is submitted
+        await supabase
+            .from('Posts') // the table we want to use from the database
+            .insert({title: post.title, author: post.author, description: post.description}) // insertion to populate table
+            .select() // returns database entry onces it has been inserted into the database
+    }
+
+    // stopped on Step 4
 
     return (
         <div>
