@@ -19,13 +19,14 @@ const CreatePost = () => {
 
     const createPost = async (event) => {
         event.preventDefault() //prevent the page to reload when form is submitted
-        await supabase
+        await supabase  //makin calls to the supabase client
             .from('Posts') // the table we want to use from the database
             .insert({title: post.title, author: post.author, description: post.description}) // insertion to populate table
             .select() // returns database entry onces it has been inserted into the database
+
+        window.location = "/" // redirect the browser to the root URL
     }
 
-    // stopped on Step 4
 
     return (
         <div>
@@ -42,7 +43,7 @@ const CreatePost = () => {
                 <textarea rows="5" cols="50" id="description" name="description" onChange={handleChange}>
                 </textarea>
                 <br/>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" onClick={createPost}/>
             </form>
         </div>
     )
