@@ -18,7 +18,7 @@ const EditPost = ({data}) => {
         })
     }
 
-    const updatePost = async (event) =>{
+    const updatePost = async (event) =>{ // event is used so that the function handles the event when the user clicks the submit button
         event.preventDefault();
 
         await supabase //call to the supabase client
@@ -26,6 +26,17 @@ const EditPost = ({data}) => {
             .update({ title: post.title, author: post.author,  description: post.description}) 
             // we pass a JSON to .update() with the title, post and description from the data from the post
             .eq('id', id); //"equivalent" - this will ensure that the row with the matching id of the current post is updated in the database
+        
+        window.location = "/";
+    }
+
+    const deletePost = async (event) =>{
+        event.preventDefault();
+
+        await supabase
+            .from('Posts')
+            .delete() // indication that we want to perform a delete operation
+            .eq('id', id);
         
         window.location = "/";
     }
@@ -46,7 +57,7 @@ const EditPost = ({data}) => {
                 </textarea>
                 <br/>
                 <input type="submit" value="Submit" onClick={updatePost}/>
-                <button className="deleteButton">Delete</button>
+                <button className="deleteButton" onClick={deletePost}>Delete</button>
             </form>
         </div>
     )
